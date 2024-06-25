@@ -140,14 +140,17 @@ class Sequence(object):
         comp_pairs = [base_pairs[a] for a in seq if a in base_pairs.keys()]
         reverse_pairs = "".join(comp_pairs)[::-1]
         return reverse_pairs
+                
     def transcribe(self):
         # Transcribe Sequence into mRNA
         mrna_result = self.seq.replace("T", "U")
         return mrna_result
+                
     def translate(self, start_pos=0):
         # Translate Sequence into Protein/Amino Acids
         amino_acids_list =[CodonTable[self.seq[pos:pos+3]] for pos in range(start_pos, len(self.seq)-2, 3)]
         return "".join(amino_acids_list)
+                
 def get_key(val, my_dict):
     for key, value in my_dict.items():
         if val == value or val in value:
@@ -157,6 +160,7 @@ def get_value(val, my_dict):
     for key, value in my_dict.items():
         if val == key:
             return value
+                    
 def count_kmers(seq, k=3):
     # Empty Dictionary
     counts = {}
@@ -170,6 +174,7 @@ def count_kmers(seq, k=3):
             # increment
         counts[kmer] += 1  # adds 1 to the 0
     return counts
+            
 def get_kmers(seq, k=3):
     # Empty Dictionary
     counts = {}
@@ -181,25 +186,30 @@ def get_kmers(seq, k=3):
         # makes sure kmers are not being iterated again
         kmer_list.append(kmer)
     return kmer_list
+            
 def get_codons(seq, k=3):
     codon_list = []
     for i in range(0, len(seq), k):
         codon_list.append(str(seq)[i:i+k])
     return codon_list
+            
 def convert1to3(seq):
     term_list = []
     for i in seq:
         res = get_key(i, aa3_to1_dict)
         term_list.append(res)
     return "".join(term_list)
+            
 def convert3to1(seq):
     term_list = []
     for i in get_codons(seq, k=3):
         res = get_value(i, aa3_to1_dict)
         term_list.append(res)
     return ''.join(term_list)
+            
 def hamming_distance(lhs,rhs):
     return len([(x,y) for x,y in zip(lhs,rhs) if x !=y])
+            
 def occurrence(main_seq, sub_seq):
     start = 0
     indices = []
@@ -211,12 +221,14 @@ def occurrence(main_seq, sub_seq):
             break
         start += 1
     return indices
+            
 def get_acid_name(seq):
     term_list = []
     for i in get_codons(seq):
         res = get_key(i, full_aa_codon_dict)
         term_list.append(res)
     return "".join(term_list)
+            
 def codon_frequency(seq, aminoacid):
     tmpList = []
     for i in range(0, len(seq) - 2, 3):
@@ -228,17 +240,21 @@ def codon_frequency(seq, aminoacid):
     for seq in freqDict:
         freqDict[seq] = round(freqDict[seq] / totalScore, 2)
     return freqDict
+            
 def delta(x, y):
     # matches are valued as 0
     return 0 if x == y else 1
+            
 def M(seq1, seq2, i, j, k):
     # returns sum of each coordinate (x, y)
     return sum(delta(x, y) for x, y in zip(seq1[i:i+k], seq2[j:j+k]))
+            
 def makeMatrix(seq1, seq2, k):
     n = len(seq1)
     m = len(seq2)
     # returns nested list of summation values for each coordinate for pltMatrix() to read
     return [[M(seq1, seq2, i, j, k) for j in range(m)] for i in range(n)]
+            
 def plotMatrix(M, t, seq1, seq2, nonblank=chr(0x25A0), blank = ' '):
     seq1 = str(seq1)
     seq2 = str(seq2)
@@ -247,9 +263,11 @@ def plotMatrix(M, t, seq1, seq2, nonblank=chr(0x25A0), blank = ' '):
     for label, row in zip(seq1, M):
         line = ''.join(nonblank if s < t else blank for s in row)
         print(label + '|' + line)
+                
 def dotplot(seq1, seq2, k = 1, t = 1):
     M = makeMatrix(seq1, seq2, k)
     plotMatrix(M, t, seq1, seq2)
+            
 def dotplotx(seq1, seq2):
     plt.imshow(np.array(makeMatrix(seq1, seq2, 1)))
     # on x-axis list all sequences of seq 2
@@ -257,6 +275,7 @@ def dotplotx(seq1, seq2):
     # on y-axis list all sequences of seq 1
     plt.yticks(np.arange(len(list(seq1))), list(seq1))
     plt.show()
+            
 def pr_freq(protein, n):
     freq = Counter(protein).most_common(n)
     return freq
