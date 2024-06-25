@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 df = pd.read_csv(r"C:\Users\JJCuco\PycharmProjects\pythonProject1\TidyBio\amino_acids_codontable.csv")
 df.rename(columns={"Unnamed: 2":"Sym"},inplace=True)
 aa3_to1_dict = dict(zip(df['Symbols'], df['Sym']))
-full_aa_dict = dict(zip(df['Amino acids'], df['Symbols']))
 full_aa_codon_dict = dict(zip(df['Amino acids'], df['Codons']))
 CodonTable = {
             # 'M' - START, '*' - STOP
