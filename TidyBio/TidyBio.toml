@@ -4,8 +4,14 @@ version = "0.0.1"
 description = "TidyBio - Just a simple Bioinformatics Package for handling sequence data"
 authors = ["JoelP <penaojasjoel870@gmail.com>"]
 
+[tool.dependencies]
+numpy = "2.0"
+matplotlib = "^3.9"
+collections = "^1.0"
+
 [tool.poetry.dependencies]
 python = "^3.8"
+
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 
