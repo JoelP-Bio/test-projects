@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "tidybio"
 version = "0.0.1"
-description = "TidyBio - Just a simple Bioinformatics Package for handling sequence data"
+description = "Just a simple, tidy Bioinformatics Package for handling sequence data. Not much else to it."
 authors = ["JoelP <penaojasjoel870@gmail.com>"]
 
 [tool.poetry.dependencies]
