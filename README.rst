@@ -1,1 +1,1 @@
-TidyBio - Just a simple Bioinformatics Package for handling sequence data. Not much else to it.
+TidyBio - Just a simple, tidy Bioinformatics Package for handling sequence data. Not much else to it.
