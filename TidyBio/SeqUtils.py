@@ -208,7 +208,7 @@ def convert3to1(seq):
     return ''.join(term_list)
             
 def hamming_distance(lhs,rhs):
-    return len([(x,y) for x,y in zip(lhs,rhs) if x !=y])
+    return len([(x,y) for x,y in zip(lhs,rhs) if x != y])
             
 def occurrence(main_seq, sub_seq):
     start = 0
