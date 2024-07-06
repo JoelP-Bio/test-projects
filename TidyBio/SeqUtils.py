@@ -186,7 +186,19 @@ def get_kmers(seq, k=3):
         # makes sure kmers are not being iterated again
         kmer_list.append(kmer)
     return kmer_list
-            
+
+def kmer_dist(seq1_k, seq2_k):
+    seq1_set = set(seq1_k)
+    seq2_set = set(seq2_k)
+    union_seq = seq1_set.union(seq2_set)
+    intersection_seq = seq1_set.intersection(seq2_set)
+    sym_difference = len(union_seq) - len(intersection_seq)
+    dissimilarities = seq1_set ^ seq2_set
+    print(dissimilarities)
+    print(sym_difference)
+    distance = sym_difference / len(union_seq)
+    return distance
+  
 def get_codons(seq, k=3):
     codon_list = []
     for i in range(0, len(seq), k):
