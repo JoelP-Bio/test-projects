@@ -97,12 +97,12 @@ class Sequence(object):
         return str(self).index(subseq, start, end)
 
     def rindex(self, subseq, start=0, end=sys.maxsize):
-        # Find the Index/Position of a nucleotide in a sequence from the right
+        # Returns the Index/Position of a nucleotide in a sequence from the right
         return str(self).rindex(subseq, start, end)
 
     # Main Fxn
     def get_symbol_frequency(self):
-        # Get the Frequency of a Nucleotide in a Sequence
+        # Returns the Frequency of a Nucleotide in a Sequence
         base_dict = {"A":0, "T":0, "G":0, "C":0}
         for base in self.seq:
             if self.__validate_seq(base) != false:
@@ -111,6 +111,7 @@ class Sequence(object):
                 return "NucleotideError: {} not a nucleotide ['A,T,G,C']".format(base)
         return base_dict
     def get_symbol_percentage(self, chars):
+        # Returns the Percentage of a Nucleotide in a Sequence
         freq_list = []
         res_dict = {}
         char_list = chars
@@ -120,14 +121,17 @@ class Sequence(object):
         return res_dict
 
     def gc_content(self):
+        # Returns the gc_content of a sequence as a percentage
         result = float(str(self).count('G') + str(self).count('C')) / len(self) * 100
         return result
 
     def at_content(self):
+        # Returns the at_content of a sequence as a percentage
         result = float(str(self).count('A') + str(self).count('T')) / len(self) * 100
         return result
 
     def complement(self):
+        # Returns the complementary strand of a sequence
         base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
         comp_pairs = []
         for a in self:
@@ -136,27 +140,30 @@ class Sequence(object):
         return "".join(comp_pairs)
 
     def reverse_complement(self):
+        # Returns the reverse complementary strand of a sequence
         base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
         comp_pairs = [base_pairs[a] for a in seq if a in base_pairs.keys()]
         reverse_pairs = "".join(comp_pairs)[::-1]
         return reverse_pairs
                 
     def transcribe(self):
-        # Transcribe Sequence into mRNA
+        # Transcribes Sequence into mRNA
         mrna_result = self.seq.replace("T", "U")
         return mrna_result
                 
     def translate(self, start_pos=0):
-        # Translate Sequence into Protein/Amino Acids
+        # Translates Sequence into Protein/Amino Acids
         amino_acids_list =[CodonTable[self.seq[pos:pos+3]] for pos in range(start_pos, len(self.seq)-2, 3)]
         return "".join(amino_acids_list)
                 
 def get_key(val, my_dict):
+    # Returns the key of a value 
     for key, value in my_dict.items():
         if val == value or val in value:
             return key
 
 def get_value(val, my_dict):
+    # Returns the value of a key
     for key, value in my_dict.items():
         if val == key:
             return value
