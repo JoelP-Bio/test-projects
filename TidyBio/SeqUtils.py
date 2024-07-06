@@ -191,8 +191,10 @@ def kmer_dist(seq1_k, seq2_k):
     seq1_set = set(seq1_k)
     seq2_set = set(seq2_k)
     union_seq = seq1_set.union(seq2_set)
+# intersection shows identical elements in either set
     intersection_seq = seq1_set.intersection(seq2_set)
     sym_difference = len(union_seq) - len(intersection_seq)
+# dissimilarites show differing elements in either set
     dissimilarities = seq1_set ^ seq2_set
     print(dissimilarities)
     print(sym_difference)
@@ -200,12 +202,14 @@ def kmer_dist(seq1_k, seq2_k):
     return distance
   
 def get_codons(seq, k=3):
+# returns codons
     codon_list = []
     for i in range(0, len(seq), k):
         codon_list.append(str(seq)[i:i+k])
     return codon_list
             
 def convert1to3(seq):
+# returns 3-letter protein seq
     term_list = []
     for i in seq:
         res = get_key(i, aa3_to1_dict)
@@ -213,6 +217,7 @@ def convert1to3(seq):
     return "".join(term_list)
             
 def convert3to1(seq):
+# returns 1-letter protein seq
     term_list = []
     for i in get_codons(seq, k=3):
         res = get_value(i, aa3_to1_dict)
@@ -220,15 +225,19 @@ def convert3to1(seq):
     return ''.join(term_list)
             
 def hamming_distance(lhs,rhs):
+# returns hamming distance based on mismatches
     return len([(x,y) for x,y in zip(lhs,rhs) if x != y])
             
 def occurrence(main_seq, sub_seq):
+# shows the occurrence of a sub sequence with its positions
     start = 0
     indices = []
     while True:
         start = main_seq.find(sub_seq, start)
         if start > 0:
             indices.append(start)
+            end = start + len(sub_seq)
+            indices.append(end)
         else:
             break
         start += 1
