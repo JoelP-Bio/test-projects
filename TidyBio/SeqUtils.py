@@ -191,10 +191,10 @@ def kmer_dist(seq1_k, seq2_k):
     seq1_set = set(seq1_k)
     seq2_set = set(seq2_k)
     union_seq = seq1_set.union(seq2_set)
-# intersection shows identical elements in either set
+    # intersection shows identical elements in either set
     intersection_seq = seq1_set.intersection(seq2_set)
     sym_difference = len(union_seq) - len(intersection_seq)
-# dissimilarites show differing elements in either set
+    # dissimilarites show differing elements in either set
     dissimilarities = seq1_set ^ seq2_set
     print(dissimilarities)
     print(sym_difference)
@@ -202,14 +202,14 @@ def kmer_dist(seq1_k, seq2_k):
     return distance
   
 def get_codons(seq, k=3):
-# returns codons
+    # returns codons
     codon_list = []
     for i in range(0, len(seq), k):
         codon_list.append(str(seq)[i:i+k])
     return codon_list
             
 def convert1to3(seq):
-# returns 3-letter protein seq
+    # returns 3-letter protein seq
     term_list = []
     for i in seq:
         res = get_key(i, aa3_to1_dict)
@@ -217,7 +217,7 @@ def convert1to3(seq):
     return "".join(term_list)
             
 def convert3to1(seq):
-# returns 1-letter protein seq
+    # returns 1-letter protein seq
     term_list = []
     for i in get_codons(seq, k=3):
         res = get_value(i, aa3_to1_dict)
@@ -225,25 +225,26 @@ def convert3to1(seq):
     return ''.join(term_list)
             
 def hamming_distance(lhs,rhs):
-# returns hamming distance based on mismatches
+    # returns hamming distance based on mismatches
     return len([(x,y) for x,y in zip(lhs,rhs) if x != y])
             
 def occurrence(main_seq, sub_seq):
-# shows the occurrence of a sub sequence with its positions
-    start = 0
+    # shows the occurrence of a sub sequence with its positions
     indices = []
+    start = 0
+    # while loop for multiple instances of the sub sequence within the main
     while True:
         start = main_seq.find(sub_seq, start)
         if start > 0:
-            indices.append(start)
             end = start + len(sub_seq)
-            indices.append(end)
+            indices.append([start, end])
         else:
             break
         start += 1
     return indices
             
 def get_acid_name(seq):
+    # returns full acid name
     term_list = []
     for i in get_codons(seq):
         res = get_key(i, full_aa_codon_dict)
@@ -251,6 +252,7 @@ def get_acid_name(seq):
     return "".join(term_list)
             
 def codon_frequency(seq, aminoacid):
+    # returns frequency of each codon
     tmpList = []
     for i in range(0, len(seq) - 2, 3):
         if CodonTable[seq[i:i + 3]] == aminoacid:
@@ -277,6 +279,7 @@ def makeMatrix(seq1, seq2, k):
     return [[M(seq1, seq2, i, j, k) for j in range(m)] for i in range(n)]
             
 def plotMatrix(M, t, seq1, seq2, nonblank=chr(0x25A0), blank = ' '):
+    # plots matrix
     seq1 = str(seq1)
     seq2 = str(seq2)
     print(' |' + seq2)
@@ -286,10 +289,12 @@ def plotMatrix(M, t, seq1, seq2, nonblank=chr(0x25A0), blank = ' '):
         print(label + '|' + line)
                 
 def dotplot(seq1, seq2, k = 1, t = 1):
+    # finishes dotplot
     M = makeMatrix(seq1, seq2, k)
     plotMatrix(M, t, seq1, seq2)
             
 def dotplotx(seq1, seq2):
+    # dotplot utilizing numpy and matplotlib
     plt.imshow(np.array(makeMatrix(seq1, seq2, 1)))
     # on x-axis list all sequences of seq 2
     plt.xticks(np.arange(len(list(seq2))), list(seq2))
@@ -298,5 +303,6 @@ def dotplotx(seq1, seq2):
     plt.show()
             
 def pr_freq(protein, n):
+    # returns most common proteins
     freq = Counter(protein).most_common(n)
     return freq
