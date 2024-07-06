@@ -194,7 +194,9 @@ def get_kmers(seq, k=3):
         kmer_list.append(kmer)
     return kmer_list
 
-def kmer_dist(seq1_k, seq2_k):
+def kmer_dist(seq1, seq2):
+    seq1_k = get_kmers(seq1)
+    seq2_k = get_kmers(seq2)
     seq1_set = set(seq1_k)
     seq2_set = set(seq2_k)
     union_seq = seq1_set.union(seq2_set)
