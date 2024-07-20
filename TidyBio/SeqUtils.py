@@ -106,12 +106,20 @@ class Sequence(object):
     # Main Fxn
     def get_symbol_frequency(self):
         # Returns the Frequency of a Nucleotide in a Sequence
-        base_dict = {"A":0, "T":0, "G":0, "C":0}
-        for base in self.seq:
-            if self.__validate_seq(base):
-                base_dict[base] += 1
-            else:
-                return "NucleotideError: {} not a nucleotide ['A,T,G,C']".format(base)
+        if "U" in self.seq:
+            base_dict = {"A": 0, "U": 0, "G": 0, "C": 0}
+            for base in self.seq:
+                if self.__validate_seq(base):
+                    base_dict[base] += 1
+                else:
+                    raise "NucleotideError: {} not a nucleotide ['A,U,G,C']".format(base)
+        else:
+            base_dict = {"A": 0, "T": 0, "G": 0, "C": 0}
+            for base in self.seq:
+                if self.__validate_seq(base):
+                    base_dict[base] += 1
+                else:
+                    raise "NucleotideError: {} not a nucleotide ['A,T,G,C']".format(base)
         return base_dict
     def get_symbol_percentage(self, chars):
         # Returns the Percentage of a Nucleotide in a Sequence
