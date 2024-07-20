@@ -108,7 +108,7 @@ class Sequence(object):
         # Returns the Frequency of a Nucleotide in a Sequence
         base_dict = {"A":0, "T":0, "G":0, "C":0}
         for base in self.seq:
-            if self.__validate_seq(base) != false:
+            if self.__validate_seq(base):
                 base_dict[base] += 1
             else:
                 return "NucleotideError: {} not a nucleotide ['A,T,G,C']".format(base)
