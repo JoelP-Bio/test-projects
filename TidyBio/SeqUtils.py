@@ -8,8 +8,6 @@ df.rename(columns={"Unnamed: 2":"Sym"},inplace=True)
 aa3_to1_dict = dict(zip(df['Symbols'], df['Sym']))
 full_aa_codon_dict = dict(zip(df['Amino acids'], df['Codons']))
 full_aato1_dict = dict(zip(df['Amino acids'],df['Sym']))
-zero = '0' * 20
-new_acid_dict = dict(zip(full_aato1_dict.values(),[int(i) for i in list(zero)]))
 CodonTable = {
             # 'M' - START, '*' - STOP
             "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A",
@@ -325,6 +323,8 @@ def dotplotx(seq1, seq2):
     plt.show()
 
 def aa_type_counter(protein):
+    zero = '0' * 20
+    new_acid_dict = dict(zip(full_aato1_dict.values(),[int(i) for i in list(zero)]))
     for aa in protein:
         for acid in new_acid_dict.keys():
             if aa == acid:
