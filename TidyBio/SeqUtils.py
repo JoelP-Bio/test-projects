@@ -160,7 +160,7 @@ class Sequence(object):
     def complement(self):
         # Returns the complementary strand of a sequence
         comp_pairs = []
-        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G", "U": "A"}
+        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
         for a in self:
             if a in base_pairs.keys():
                 comp_pairs.append(base_pairs[a])
@@ -168,7 +168,7 @@ class Sequence(object):
 
     def reverse_complement(self):
         # Returns the reverse complementary strand of a sequence
-        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G", "U": "A"}
+        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
         comp_pairs = [base_pairs[a] for a in seq if a in base_pairs.keys()]
         reverse_pairs = "".join(comp_pairs)[::-1]
         return reverse_pairs
@@ -182,6 +182,19 @@ class Sequence(object):
         # Translates Sequence into Protein/Amino Acids
         amino_acids_list =[CodonTable[self.seq[pos:pos+3]] for pos in range(start_pos, len(self.seq)-2, 3)]
         return "".join(amino_acids_list)
+
+def reverse_transcribe(mRNA):
+    # Reverse transcribes mRNA to DNA
+    dna_result = mRNA.replace("U", "T")
+    return Sequence(dna_result)
+
+def reverse_translate(protein):
+    # Reverse translates Protein/Amino Acids to mRNA
+    aa_list = []
+    for i in range(len(protein)):
+        aa_list.append(protein[i])
+    codon_list = [get_key(aa, CodonTable) for aa in aa_list]
+    return Sequence("".join(codon_list))
                 
 def get_key(val, my_dict):
     # Returns the key of a value 
