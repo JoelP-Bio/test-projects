@@ -143,8 +143,8 @@ class Sequence(object):
 
     def complement(self):
         # Returns the complementary strand of a sequence
-        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
         comp_pairs = []
+        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G", "U": "A"}
         for a in self:
             if a in base_pairs.keys():
                 comp_pairs.append(base_pairs[a])
@@ -152,7 +152,7 @@ class Sequence(object):
 
     def reverse_complement(self):
         # Returns the reverse complementary strand of a sequence
-        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G"}
+        base_pairs = {"A": "T", "T": "A", "G": "C", "C": "G", "U": "A"}
         comp_pairs = [base_pairs[a] for a in seq if a in base_pairs.keys()]
         reverse_pairs = "".join(comp_pairs)[::-1]
         return reverse_pairs
