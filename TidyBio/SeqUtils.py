@@ -52,12 +52,28 @@ class Sequence(object):
         return self.seq
 
     def __validate_seq(self, seq):
-        base_nucleotide = ["A", "T", "G", "C", "U"]
-        real_seq = seq.upper()
+        real_seq, base_nucleotide = self.__validate_seq_type(seq)
         for base in real_seq:
             if base not in base_nucleotide:
                 return False
         return real_seq
+
+    def __validate_seq_type(self, seq):
+        real_seq = seq.upper()
+        if "U" in real_seq:
+            for base in real_seq:
+                if "T" in real_seq:
+                    raise "NucleotideError: {} not an RNA nucleotide ['A,U,G,C']".format(base)
+                else:
+                    base_nucleotide = ["A", "U", "G", "C"]
+                    return real_seq, base_nucleotide
+        else:
+            for base in real_seq:
+                if "U" in real_seq:
+                    raise "NucleotideError: {} not a DNA nucleotide ['A,T,G,C']".format(base)
+                else:
+                    base_nucleotide = ["A", "T", "G", "C"]
+                    return real_seq, base_nucleotide
 
     def __len__(self):
         return len(self.seq)
