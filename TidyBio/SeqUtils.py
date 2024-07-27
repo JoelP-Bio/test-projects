@@ -181,8 +181,6 @@ class Sequence(object):
     def translate(self, start_pos=0):
         # Translates Sequence into Protein/Amino Acids
         amino_acids_list =[CodonTable[self.seq[pos:pos+3]] for pos in range(start_pos, len(self.seq)-2, 3)]
-        # range subtracts length by 2 to get the limit and steps by 3 from the first value (0) to get there
-        # ex: (0, 3, 6); limit is 7; length is 9
         return "".join(amino_acids_list)
 
 def reverse_transcribe(mRNA):
